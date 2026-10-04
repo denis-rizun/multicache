@@ -1,0 +1,55 @@
+[project]
+name = "multicache"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "alembic>=1.20.0",
+    "asyncpg>=0.31.0",
+    "fastapi>=0.142.2",
+    "pydantic>=2.13.5",
+    "psycopg[binary]>=3.3.6",
+    "greenlet>=3.5.6",
+    "pydantic-settings>=2.15.0",
+    "redis>=8.1.0",
+    "sqlmodel>=0.0.47",
+    "structlog>=26.1.0",
+    "uvicorn>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.4.0",
+    "ruff>=0.16.10",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["F", "E", "W", "C", "N", "I", "B", "Q", "T", "UP"]
+
+[tool.mypy]
+python_version = "3.14"
+plugins = ["pydantic.mypy"]
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+explicit_package_bases = true
+mypy_path = "."
+packages = ["app"]
+exclude = [".venv"]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "tests"]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+addopts = "--strict-markers"
+markers = [
+    "unit: pure-function tests, no infrastructure (database, network, filesystem)",
+    "integration: tests that exercise the real database and infrastructure",
+    "e2e: end-to-end tests that drive the FastAPI app via HTTP",
+]
