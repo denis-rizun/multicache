@@ -10,10 +10,10 @@ dependencies = [
     "psycopg[binary]>=3.3.6",
     "greenlet>=3.5.6",
     "pydantic-settings>=2.15.0",
-    "redis>=8.1.0",
     "sqlmodel>=0.0.47",
     "structlog>=26.1.0",
     "uvicorn>=0.54.0",
+    "httpx>=0.28.1",
 ]
 
 [dependency-groups]
@@ -39,7 +39,7 @@ ignore_missing_imports = true
 explicit_package_bases = true
 mypy_path = "."
 packages = ["app"]
-exclude = [".venv"]
+exclude = [".venv", "migrations"]
 
 [tool.pytest.ini_options]
 pythonpath = [".", "tests"]
