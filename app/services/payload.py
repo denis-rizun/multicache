@@ -49,7 +49,7 @@ class PayloadService:
 
     async def _transform_all(self, values: set[str]) -> dict[str, str]:
         hashes = {value: hash_string(value) for value in values}
-
+        # input(no hashed): input (hashed)
         transformed: dict[str, str] = {}
         for hash_batch in batched(hashes.values(), DB_BATCH_SIZE, strict=False):
             select_stmt = select(Transformation).where(col(Transformation.input_hash).in_(hash_batch))
