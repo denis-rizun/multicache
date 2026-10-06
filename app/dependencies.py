@@ -7,7 +7,6 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app.core.db import async_session
 from app.models import Payload
-from app.schemas import PayloadCreateRequest
 from app.services.payload import PayloadService
 from app.services.transformer import Transformer
 
@@ -32,13 +31,8 @@ async def get_payload_service(session: SessionDep, transformer: TransformerDep) 
 PayloadServiceDep = Annotated[PayloadService, Depends(get_payload_service)]
 
 
-async def get_created_payload_id(body: PayloadCreateRequest, service: PayloadServiceDep) -> UUID:
-    return await service.create(body.list_1, body.list_2)
-
-
 async def get_payload(id: UUID, service: PayloadServiceDep) -> Payload:
     return await service.retrieve(id)
 
 
-CreatedPayloadIdDep = Annotated[UUID, Depends(get_created_payload_id)]
 PayloadDep = Annotated[Payload, Depends(get_payload)]

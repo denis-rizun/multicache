@@ -10,8 +10,8 @@ from app.core.config import config
 from app.core.db import dispose_engine
 from app.core.exceptions import register_exception_handler
 from app.core.logger import configure_logging
-from app.dependencies import CreatedPayloadIdDep, PayloadDep
-from app.schemas import PayloadCreateResponse, PayloadRetrieveResponse
+from app.dependencies import PayloadDep, PayloadServiceDep
+from app.schemas import PayloadCreateRequest, PayloadCreateResponse, PayloadRetrieveResponse
 
 
 @asynccontextmanager
@@ -55,8 +55,9 @@ async def health() -> dict[str, str]:
     summary="Generate a payload, or reuse the identifier of an identical one",
     status_code=status.HTTP_201_CREATED,
 )
-async def create(payload_id: CreatedPayloadIdDep) -> PayloadCreateResponse:
-    return PayloadCreateResponse(id=payload_id)
+async def create(body: PayloadCreateRequest, service: PayloadServiceDep) -> PayloadCreateResponse:
+    id = await service.create(body.list_1, body.list_2)
+    return PayloadCreateResponse(id=id)
 
 
 @app.get(
