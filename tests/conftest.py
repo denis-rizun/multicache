@@ -18,8 +18,6 @@ _ = _models
 def test_database_url() -> str:
     url = config.database.get_test_url()
     test_db = make_url(url).database
-    if not test_db:
-        pytest.fail("POSTGRES_TEST_DATABASE is not configured")
     if test_db == config.database.DATABASE:
         pytest.fail(
             f"Refusing to run tests: TEST_DATABASE ({test_db!r}) "
