@@ -41,6 +41,8 @@ class DatabaseSettings(BaseSettings):
     PASSWORD: SecretStr = SecretStr("")
     HOST: str = ""
     PORT: int = 0
+    POOL_SIZE: int = 5
+    POOL_TIMEOUT_S: float = 10.0
 
     TEST_DATABASE: str = ""
 
